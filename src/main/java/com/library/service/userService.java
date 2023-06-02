@@ -11,7 +11,8 @@ public class userService {
     public User login(String username,String password){
         SqlSession sqlSession=factory.openSession();
         UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.selectByUsername(username, password);
+
+       User user = userMapper.selectUser(username, password);
         sqlSession.close();
         return user;
     }

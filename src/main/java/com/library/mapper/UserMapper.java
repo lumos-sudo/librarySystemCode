@@ -13,7 +13,7 @@ public interface UserMapper {
      * @return
      */
     @Select("select * from user where uname = #{username} and upassword = #{password}")
-    User select(String username, String password);
+    User selectUser(@Param("username")String username,@Param("password") String password);
 
     /**
      * 根据用户名查询用户对象
@@ -27,6 +27,9 @@ public interface UserMapper {
      * 添加用户
      * @param user
      */
-    @Insert("insert into tb_user values(#{uno},#{username},#{sex},#{password},#{email})")
+    @Insert("INSERT INTO user(uname,usex,upassword,email)\n" +
+            "VALUES('王三','男','aaa000000',NULL);\n")
     void add(User user);
+
+
 }

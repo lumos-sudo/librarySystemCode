@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +15,11 @@
     <title>登录</title>
 </head>
 <style>
-    * {
+    *{
         margin: 0;
         padding: 0;
     }
+
     html {
         height: 100%;
     }
@@ -27,6 +30,7 @@
         height: 100%;
         background-image: linear-gradient(to right, #117c6f, #289c8e,#2fc4b2,#8de5db,#b2f0eb);
     }
+
     .login-wrapper {
         background-image: linear-gradient(to right,#018abe,#97cadb,#d6e8ee);
         width: 358px;
@@ -77,6 +81,7 @@
         text-decoration-line: none;
         color: red;
     }
+
     .container{
         display: none;
         width:400px;
@@ -114,83 +119,55 @@
 <body>
 
 <div class="container0">
-    <div class="login-wrapper">
-        <div class="header">登录</div>
-        <div class="rbtn">
-            <input type="radio" id="user" name="object" value="user" checked="checked">
-            <label for="user">用户</label>
-            <input type="radio" id="librarian" name="object" value="librarian">
-            <label for="librarian">图书管理员</label>
-            <input type="radio" id="system_administrator" name="object" value="system administrator">
-            <label for="system_administrator">系统管理员</label>
-        </div>
-        <div class="form-wrapper">
-            <form action="/librarySystem_war/servlet" id="form">
+    <div class="login-wrapper" >
+        <form action="/librarySystem_war/testServlet" id="form" method="get">
+            <div class="header">登录</div>
+            <div class="rbtn">
+                <input type="radio" id="user" name="object" value="1" checked="checked" onclick="change1()">
+                <label for="user">用户</label>
+                <input type="radio" id="librarian" name="object" value="0" onclick="change2()">
+                <label for="librarian">图书管理员</label>
+                <input type="radio" id="system_administrator" name="object" value="0" onclick="change3()">
+                <label for="system_administrator">系统管理员</label>
+            </div>
+            <div class="form-wrapper">
                 <table>
                     <tr>
                         <td>用户名：</td>
                         <td>
-                            <input type="text" name="username" id="username" placeholder="用户名" class="input-item">
+                            <input type="text" name="name" id="username" placeholder="用户名" class="input-item">
                         </td>
                     </tr>
+
                     <tr>
                         <td>密码：</td>
                         <td>
                             <input type="password" name="password" id="password" placeholder="密码" class="input-item">
                         </td>
                     </tr>
+
                     <tr>
+
                         <td  style=" text-align:center;">
-                            <div id="errMsg">${login_msg} </div>
+                            <div id="errMsg">${login_msg}</div>
                         </td>
                     </tr>
+
                 </table>
 
-            </form>
-            <button class="btn" onclick="onclickFun()">登录</button>
-        </div>
-        <div class="msg">
-            没有账户？
-            <a href="#" onclick="openDialog1()">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <a href="#" onclick="openDialog2()">忘记密码</a>
-        </div>
+                <button class="btn" name="btn" type="submit">登录</button>
+            </div>
+
+            <div class="msg">
+                没有账户？
+                <a href="#" onclick="openDialog1()">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <a href="#" onclick="openDialog2()">忘记密码</a>
+            </div>
+        </form>
     </div>
-    <div id="light1" class="container">
-        <div class="drag-bar">
-            <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog1()" class="close" >×</a></div>
-        </div>
-        <div class="content">
-            <form>
-                <table align="center">
-                    <caption>注册</caption>
-                    <tr>
-                        <td>姓名：</td>
-                        <td>
-                            <input type="text"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>密码：</td>
-                        <td>
-                            <input type="text"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>绑定的qq邮箱：</td>
-                        <td>
-                            <input type="text"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="text-align: center; padding: 5px;">
-                            <input type="button" value="提交"/>
-                            <input type="button" value="重置"/>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </div>
+
+
+
     <div id="light2" class="container">
         <div class="drag-bar">
             <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog2()" class="close" >×</a></div>
@@ -214,15 +191,28 @@
                     <tr>
                         <td colspan="3" style="text-align: center; padding: 5px;">
                             <input type="button" value="提交"/>
-                            <input type="button" value="重置"/>
+                            <input type="reset" value="重置"/>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
     </div>
-    <script src="index.js"></script>
-</div>
 
+</div>
+<script>
+    function change1()
+    {
+        this.value=1;
+    }
+    function change2()
+    {
+        this.value=2;
+    }
+    function change3()
+    {
+        this.value=3;
+    }
+</script>
 </body>
 </html>

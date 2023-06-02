@@ -14,7 +14,7 @@ public interface borrowBookMapper {
 @Select("SELECT book.bno 编号,bname 书名,bdate 借阅日期,\n" +
         "30-datediff(curdate(),bdate) 剩余天数\n" +
         "FROM book,borrow\n" +
-        "WHERE book.bno=borrow.bno AND borrow.uno=34134432 AND breturn=\"否\";\n")
-    List<borrowBook> selectAllRecord();
+        "WHERE book.bno=borrow.bno AND borrow.uno=#{uno} AND breturn=\"否\";\n")
+    List<borrowBook> selectAllRecord(int uno);
 }
 

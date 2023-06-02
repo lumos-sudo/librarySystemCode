@@ -19,28 +19,6 @@
     书籍编号<input type="text" name="bno"  value="${bno}" >
     <input type="submit" id="btn" value="确认" >
 </form>
-<script>
 
-</script>
-<%--<script src="js/axios-0.18.0.js"></script>
-<script>
-    document.getElementById("btn").onclick=function (){
-        let bno=document.getElementById("Bbno").value;
-        console.log(bno);
-        axios({
-            method:"post",
-            url:"http://localhost:8080/librarySystem_war/lendServlet",
-            data:{bno:"1"}
-        }).then(function (resp) {
-            document.getElementById("Bbno").value=123;
-            if(resp.data=="success"){
-                location.href = "http://localhost:8080/librarySystem_war/user_borrow.html";
-
-            }
-        })
-
-    }
-
-</script>--%>
 </body>
 </html>

@@ -15,6 +15,8 @@ public class returnServlet extends HttpServlet {
     private borrowService service=new borrowService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String user = (String) session.getAttribute("user");
         String id=request.getParameter("bno");
 
         request.setAttribute("bno",id);

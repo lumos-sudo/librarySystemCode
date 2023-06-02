@@ -44,11 +44,5 @@ function onDrag(e){
             document.getElementById('light').style.display='none';
         }
 function onclickFun(){
-let inputs = document.getElementsByName("object");
-if (inputs [2].checked)
-window.location.href="system_index.html";
-else if(inputs [1].checked)
-window.location.href="librarian_main.html";
-else
-window.location.href="index.html";
+
 }

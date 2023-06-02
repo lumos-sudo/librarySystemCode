@@ -14,10 +14,6 @@ import java.util.List;
 public class updateServlet extends HttpServlet {
     private bookService service=new bookService();
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +24,7 @@ public class updateServlet extends HttpServlet {
         service.lend(n);
         List<Book> books= service.selectAllBook();
         request.setAttribute("books",books);
-        request.getRequestDispatcher("/selectAllServlet").forward(request,response);
+        request.getRequestDispatcher("/user_book.jsp").forward(request,response);
 
     }
 

@@ -1,23 +1,30 @@
 package com.library.pojo;
 
 public class User {
-    private String username;
-    private String password;
+    private int uno;
+    private String uname;
+
     private String sex;
     private String email;
-    private String uno;
+    private String password;
 
-    public User(String username, String password) {
-        this.username = username;
+    private String state;
+
+    public User(int uno, String uname, String sex, String email, String password, String state) {
+        this.uno = uno;
+        this.uname = uname;
+        this.sex = sex;
+        this.email = email;
         this.password = password;
+        this.state = state;
     }
 
-    public User(String username, String password, String sex, String email, String uno) {
-        this.username = username;
-        this.password = password;
-        this.sex = "男";
-        this.email = email;
-        this.uno = "1";
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getSex() {
@@ -36,20 +43,20 @@ public class User {
         this.email = email;
     }
 
-    public String getUno() {
+    public int getUno() {
         return uno;
     }
 
-    public void setUno(String uno) {
+    public void setUno(int uno) {
         this.uno = uno;
     }
 
     public String getUsername() {
-        return username;
+        return uname;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.uname = username;
     }
 
     public String getPassword() {

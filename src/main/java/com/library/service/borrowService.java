@@ -24,10 +24,11 @@ public class borrowService {
         borrowBookMapper mapper = sqlSession.getMapper(borrowBookMapper.class);
 
        //4.调用方法
-        List<borrowBook> books=mapper.selectAllRecord();
+      /*  List<borrowBook> books=mapper.selectAllRecord();
         sqlSession.close();
 
-        return books;
+        return books;*/
+        return null;
     };
 
     /**

@@ -21,6 +21,6 @@
         <!--Mapper代理方式加载对应包下映射资源-->
         <mapper resource="com/mapper/borrowBookMapper.xml"/>
         <mapper resource="com/mapper/bookMapper.xml"/>
-
+        <mapper resource="com/mapper/UserMapper.xml"/>
     </mappers>
 </configuration>

@@ -21,12 +21,7 @@ public class borrowServlet extends HttpServlet {
 
         List<borrowBook> record= service.selectAllRecord();
 
-        //2、将borrowRecord转换为JSON数据 序列化
-        String jsonString= JSON.toJSONString(record);
-        System.out.println(jsonString);
-        //3、响应数据
-        response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(jsonString);
+
     }
 
     @Override
