@@ -1,16 +1,12 @@
 package com.library.web;
 
-import com.alibaba.fastjson.JSON;
 import com.library.pojo.Book;
-import com.library.pojo.borrowBook;
 import com.library.service.bookService;
-import com.library.service.borrowService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/selectAllServlet")

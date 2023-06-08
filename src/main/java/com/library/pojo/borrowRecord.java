@@ -1,13 +1,37 @@
 package com.library.pojo;
 
-public class borrowBook {
+public class borrowRecord {
+
     private Integer bno;
     private String bname;
 
     private String bdate;
     private String ldate;
 
+    private String state;
 
+    public borrowRecord(Integer bno,String bname, String bdate, String ldate) {
+        this.bno = bno;
+
+        this.bname = bname;
+        this.bdate = bdate;
+        this.ldate = ldate;
+            if(ldate==null){
+                this.state="否";
+            }
+           else {
+               this.state="是";
+           }
+
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public Integer getBno() {
         return bno;

@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
 <html>
@@ -124,6 +125,24 @@
     }
 
 </style>
+<script>
+    // onclick事件
+    function search() {
+
+        var $keyword = document.getElementById("keyword").value;
+
+        window.location.href = "/librarySystem_war/searchServlet" + $keyword;
+    }
+
+    // 按Enter键,执行事件
+    function entersearch() {
+        var event = window.event || arguments.callee.caller.arguments[0];
+        if (event.keyCode == 13) {
+            search();
+        }
+    }
+</script>
+
 <body>
 <div >
 
@@ -134,15 +153,15 @@
         </div>
 
         <div style="text-align: center; padding:30px 0px 15px 0px; ">
-            <a href="user_borrow.html">查询与借阅</a>
+            <a href="/librarySystem_war/selectAllServlet">查询与借阅</a>
         </div>
 
         <div style="text-align: center; padding:20px 0px 15px 0px; ">
-            <a href="user_list.html">借书记录</a>
+            <a href="/librarySystem_war/bookRecordServlet">借书记录</a>
         </div>
 
         <div style="text-align: center; padding:20px 0px 15px 0px; ">
-            <a href="user_return.html">归还图书</a>
+            <a href="/librarySystem_war/returnRecordServlet">归还图书</a>
         </div>
 
         <div style="text-align: center; padding:20px 0px 20px 0px; ">
@@ -156,16 +175,47 @@
             &nbsp;&nbsp;查询与借阅
         </div>
 
+
         <div style="background-color: rgb(240,242,245);height: 730px;padding: 20px;">
             <div style="background-color: white;height: 730px;border:none;border-radius: 5px;">
 
                 <div class="search" style="box-sizing: border-box;">
-                    <form action="" method="post">
-                        <input placeholder="请输入图书的相关信息" name="keyword" type="text">
+                    <form action="/librarySystem_war/searchServlet" method="get">
+                        <input placeholder="请输入搜索的内容" name="keyword" type="text" id="keyword" >
                         <button type="submit"></button>
                     </form>
                 </div>
+                <nav>
+                    <span id="add" onclick="openDialog1()">借阅</span>
+                </nav>
 
+                <div id="light1" class="container">
+                    <div class="drag-bar">
+                        <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog1()" class="close" >×</a></div>
+                    </div>
+                    <div class="content">
+                        <form action="/librarySystem_war/lendServlet" method="get">
+                            <table align="center">
+                                <caption>借阅图书</caption>
+                                <tr>
+                                    <td colspan="3" style="text-align: center; padding: 5px;">
+                                       请输入要借阅的书籍编号
+                                        <input type="text" name="bno"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: center; padding: 5px;">
+                                        <input type="submit" value="借阅"/>
+                                        <input type="button" value="取消"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+                <script src="index.js"></script>
+                <script></script>
                 <div style=" width:100%; height: 400px; overflow-y:scroll" >
                     <div  style="height:1000px">
 
@@ -178,7 +228,7 @@
                                 <th>作者</th>
                                 <th>类型</th>
                                 <th>出版社</th>
-                                <th>状态</th>
+                                <th>库存</th>
                                 <th>操作</th>
                             </tr>
 
@@ -193,9 +243,6 @@
                                     <td>${b.pub}</td>
                                     <td>${b.ing}</td>
                                     <td>
-                                        <c:if test="${b.ing<=0}">借阅</c:if>
-                                        <c:if test="${b.ing>0}"> <a href="/librarySystem_war/lendServlet?bno=${b.bno}">借阅</a></c:if>
-
                                         <a href="/librarySystem_war/showDetailServlet?bno=${b.bno}">简介</a>
                                     </td>
                                 </tr>

@@ -125,9 +125,9 @@
             <div class="rbtn">
                 <input type="radio" id="user" name="object" value="1" checked="checked" onclick="change1()">
                 <label for="user">用户</label>
-                <input type="radio" id="librarian" name="object" value="0" onclick="change2()">
+                <input type="radio" id="librarian" name="object" value="2" onclick="change2()">
                 <label for="librarian">图书管理员</label>
-                <input type="radio" id="system_administrator" name="object" value="0" onclick="change3()">
+                <input type="radio" id="system_administrator" name="object" value="3" onclick="change3()">
                 <label for="system_administrator">系统管理员</label>
             </div>
             <div class="form-wrapper">
@@ -147,8 +147,7 @@
                     </tr>
 
                     <tr>
-
-                        <td  style=" text-align:center;">
+                        <td  colspan="2" style=" text-align:center;">
                             <div id="errMsg">${login_msg}</div>
                         </td>
                     </tr>
@@ -161,36 +160,45 @@
             <div class="msg">
                 没有账户？
                 <a href="#" onclick="openDialog1()">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="#" onclick="openDialog2()">忘记密码</a>
+                <a href="forgetpsw.jsp" >忘记密码</a>
             </div>
         </form>
     </div>
-
-
-
-    <div id="light2" class="container">
+    <div id="light1" class="container">
         <div class="drag-bar">
-            <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog2()" class="close" >×</a></div>
+            <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog1()" class="close" >×</a></div>
         </div>
         <div class="content">
-            <form>
+            <form action="/librarySystem_war/registerServlet" method="post">
                 <table align="center">
-                    <caption>忘记密码</caption>
+                    <caption>注册</caption>
                     <tr>
-                        <td>绑定的qq账号：</td>
+                        <td>姓名：</td>
                         <td>
-                            <input type="text"/>
+                            <input type="text" name="username"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>验证码：</td>
+                        <td>密码：</td>
                         <td>
-                            <input type="text"/>
+                            <input type="text" name="password"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>性别：</td>
+                        <td>
+                            <input type="text" name="sex"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>绑定的qq邮箱：</td>
+                        <td>
+                            <input type="text" name="email"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align: center; padding: 5px;">
-                            <input type="button" value="提交"/>
+                            <input type="submit" value="提交"/>
                             <input type="reset" value="重置"/>
                         </td>
                     </tr>
@@ -199,20 +207,145 @@
         </div>
     </div>
 
+
+    <div id="light2" class="container">
+        <div class="drag-bar">
+            <div style="width:5%;margin-left:90%"><a href = "javascript:void(0)" onclick = "closeDialog2()" class="close" >×</a></div>
+        </div>
+        <div class="content">
+            <form id="form0" name="form0" AUTOCOMPLETE="OFF" action="/librarySystem_war/updatePswServlet" method="post">
+                <table>
+                    <tr height="35px">
+                        <td >账户名：</td>
+                        <td>
+                            <input type="text" name="name" id="name" placeholder="请输入账户名" />
+                        </td>
+                    </tr>
+
+                    <tr height="35px">
+                        <td >收件邮箱：</td>
+                        <td>
+                            <input type="text" name="email" id="emailp" placeholder="输入邮箱" />
+                        </td>
+                        <td>
+                            <button id="btnGetVcode" style="cursor:pointer">获取验证码</button>
+                        </td>
+                    </tr>
+                    <tr height="35px">
+                        <td >验证码：</td>
+                        <td>
+                            <input type="text" name="vcode" id="vcode" placeholder="输入验证码"/>
+                        </td>
+                        <td id="message"></td>
+                    </tr>
+
+                    <a target="_self">
+                        <button type="submit" id="btnVerify" style="cursor:pointer">重置密码</button></a>
+
+                </table>
+            </form>
+        </div>
+    </div>
+
 </div>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/jsEmail.js"></script>
 <script>
-    function change1()
-    {
-        this.value=1;
+
+    function openDialog1(){
+        document.getElementById('light1').style.display='block';
     }
-    function change2()
-    {
-        this.value=2;
+    function closeDialog1(){
+        document.getElementById('light1').style.display='none';
     }
-    function change3()
-    {
-        this.value=3;
+    function openDialog2(){
+        document.getElementById('light2').style.display='block';
     }
+    function closeDialog2(){
+        document.getElementById('light2').style.display='none';
+    }
+
+
+    var time0 = 60;
+    var time = time0;
+    var t;  // 用于验证按钮的60s计时
+
+    $(document).ready(function() {
+
+        // 获取验证码按钮
+        $("#btnGetVcode").click(function() {
+            var btnGet = document.getElementById("btnGetVcode");
+            btnGet.disabled = true;  // 为了防止多次点击
+            $.ajax({
+                url: 'emailServlet?method=getVCode',
+                type: 'post',
+                data: {email: $("input[name='emailp']").val()},
+                dataType: 'text',
+                success: function(msg) {
+                    if(msg == -1){
+                        window.alert("请输入正确的邮箱！");
+                        btnGet.disabled = false;
+                    }
+                    else{
+                        useChangeBTN();  // 控制下一次重新获取验证码
+                    }
+                },
+                error:function(msg){
+                }
+            });
+        });
+
+        // 验证按钮
+        $("#btnVerify").click(function() {
+            var message = document.getElementById("message");  // 显示提示信息
+            $.ajax({
+                url: 'emailServlet?method=verify',
+                type: 'post',
+                data: {vcode: $("input[name='vcode']").val()},
+                dataType: 'text',
+                success: function(msg) {
+                    if(t<=0){
+                        message.innerHTML = "验证码错误！";
+                        $("#message").css("color","red");
+                    }
+                    else if(msg == 1){
+                        message.innerHTML = "验证码正确！";
+                        $("#message").css("color","green");
+
+                    }
+                    else{
+                        message.innerHTML = "验证码错误！";
+                        $("#message").css("color","red");
+
+                    }
+                },
+                error:function(msg){
+                }
+            });
+
+        });
+    });
+
+    //修改按钮，控制验证码重新获取
+    function changeBTN(){
+        if(time > 0){
+            $("#btnGetVcode").text("("+time+"s)"+"重新获取");
+            time = time - 1;
+        }
+        else{
+            var btnGet = document.getElementById("btnGetVcode");
+            btnGet.disabled = false;
+            $("#btnGetVcode").text("获取验证码");
+            clearInterval(t);
+            time = time0;
+        }
+    }
+    function useChangeBTN(){
+        $("#btnGetVcode").text("("+time+"s)"+"重新获取");
+        time = time - 1;
+        t = setInterval("changeBTN()", 1000);  // 1s调用一次
+    }
+
 </script>
 </body>
 </html>
