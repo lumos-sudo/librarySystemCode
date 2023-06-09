@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class bookService {
@@ -69,7 +70,7 @@ public class bookService {
     }
     public void lend(int bno,int uno){
         LocalDate date = LocalDate.now(); // get the current date
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String bdate=date.format(formatter);
         SqlSession sqlSession=factory.openSession();
         bookMapper mapper = sqlSession.getMapper(bookMapper.class);
@@ -83,17 +84,24 @@ public class bookService {
 
 
     public List<Book> query(String param){
-        //调用BrandMapper.selectAll()
-        int bno=Integer.parseInt(param);
-        //2.获取SqlSession
+
         SqlSession sqlSession=factory.openSession();
-        //3.获取borrowMapper
         bookMapper mapper = sqlSession.getMapper(bookMapper.class);
 
-        //4.调用方法
-        List<Book> books=mapper.query(bno);
+        //查询结果
+        List<Book> records=new ArrayList<>();
+        List<Book> books=mapper.selectBook();
+       StringBuffer arr[]=null;
+        for (Book o:books) {
+            String str=o.toString();
+            if(str.indexOf(param)!= -1){
+                String arr2[]=str.split(" ");
+                int bno=Integer.parseInt(arr2[0]);
+                records.add(mapper.query(bno));//test
+            }
+        }
         sqlSession.close();
 
-        return books;
+        return records;
     };
 }

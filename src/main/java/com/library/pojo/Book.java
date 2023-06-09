@@ -74,4 +74,9 @@ public class Book {
     public void setIng(int ing) {
         this.ing = ing;
     }
+
+    @Override
+    public String toString() {
+        return bno+" "+bname+""+pub+""+ssort+""+wri;
+    }
 }

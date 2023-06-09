@@ -50,7 +50,7 @@ public interface bookMapper {
     @Select("SELECT *\n" +
             "FROM book\n" +
             "WHERE bno=#{bno};\n")
-    List<Book> query(int bno);
+   Book query(int bno);
     @Select("SELECT inq\n" +
             "FROM book\n" +
             "WHERE  bno=#{bno}")
